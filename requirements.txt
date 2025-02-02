@@ -1,0 +1,2 @@
+pymongo
+huggingface_hub==0.28.1
