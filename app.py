@@ -89,8 +89,8 @@ def create_prompt():
 
 
             # Define the prompt template
-            prompt_template = "You are a creative assistant generating a detailed prompt of a person and a scene based on image descriptions and their emotional state. Given the following inputs: \n\n 1. Front image description: {frontImageDescription} \n 2. Back image description: {backImageDescription} \n 3. Emotion: {emotion} \n\n Please fill in the following template with the relevant information: \n 'A [skin color] [gender] with [hair color and style], [eye color], strongly expressing [emotion] emotion, wearing [clothing], in a setting with [back camera description]' \n For the parameter back camera description summarize the provided back image description. Please just give the answer in plain text, without ' or anything else."
-            prompt_template2 = "Craft a concise and engaging caption (maximum 8 words) that summarizes the entire scene, combining the front and back image descriptions with the conveyed emotion. The caption should be easy to read, and capture the scene. \n Front View: {frontImageDescription} \n Back View: {backImageDescription} \n Emotion: {emotion} \n Ensure the caption feels natural, compelling, and vividly represents the scene. It should include the emotion."
+            prompt_template = "Generate a detailed prompt of a person and a scene based on image descriptions and their emotional state. Given the following inputs:\n\n1. Front image description: {frontImageDescription}\n2. Back image description: {backImageDescription}\n3. Emotion: {emotion} \n\nFill in the following template with the relevant information:\n'A [skin color] [gender] with [hair color and style], [eye color], expressing [emotion] intensely, wearing [clothing], in a setting where [summarized back image description in about 20 words].'\nFor the parameter 'summarized back image description,' condense the provided back image description into approximately 20 words. Ensure logical consistency and avoid adding unrelated details. Output only the final prompt in plain text, without any extra characters or formatting."
+            prompt_template2 = "Generate concise German captions that convey the specified emotion based on FrontImage and BackImage descriptions.\nFormat: Ich bin [emotion]. [Creative phrase fitting the scene].\nReplace [emotion] with the German equivalent of {emotion}.\nUse {frontImageDescription} and {backImageDescription} in the second sentence.\nKeep it brief—maximum 10 words total.\nExample: Ich bin glücklich. Die Pizza war lecker."
             
 
             # Format the prompt
@@ -118,13 +118,13 @@ def create_prompt():
             completion = inference_client.chat.completions.create(
                 model="mistralai/Mistral-Nemo-Instruct-2407", 
             	messages=messages, 
-            	max_tokens=200
+            	max_tokens=300
             )
 
             completion2 = inference_client.chat.completions.create(
                 model="mistralai/Mistral-Nemo-Instruct-2407", 
             	messages=messages2, 
-            	max_tokens=80
+            	max_tokens=300
             )
 
             result = completion.choices[0].message.content + ", icon emoji"
